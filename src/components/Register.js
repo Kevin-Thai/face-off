@@ -16,7 +16,7 @@ class Register extends React.Component {
   }
 
   onSubmitRegister = async () => {
-    const { data } = await axios.post('http://localhost:3000/register', this.state)
+    const { data } = await axios.post(`${this.props.url}/register`, this.state)
     if (data.id) {
       this.props.loadUser(data)
       this.props.onRouteChange('home')

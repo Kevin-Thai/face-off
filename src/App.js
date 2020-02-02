@@ -11,6 +11,12 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Rank from './components/Rank'
 import './App.css'
 
+// const url =
+//   process.env.NODE_ENV === 'production'
+//     ? 'https://face-off-api.herokuapp.com'
+//     : 'http://localhost:3000'
+const url = 'https://face-off-api.herokuapp.com'
+
 const particlesOptions = {
   particles: {
     number: {
@@ -67,11 +73,11 @@ class App extends Component {
   onPictureSubmit = async () => {
     this.setState({ imageUrl: this.state.input })
     try {
-      const { data } = await axios.post('http://localhost:3000/imageurl', {
+      const { data } = await axios.post(`${url}/imageurl`, {
         input: this.state.input,
       })
       if (data) {
-        const entries = await axios.put('http://localhost:3000/image', { id: this.state.user.id })
+        const entries = await axios.put(`${url}/image`, { id: this.state.user.id })
         this.setState(Object.assign(this.state.user, { entries: entries.data }))
       }
       this.displayFaceBox(this.calculateFaceLocation(data))
@@ -109,9 +115,9 @@ class App extends Component {
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>
         ) : route === 'signin' ? (
-          <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} url={url} />
         ) : (
-          <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} url={url} />
         )}
       </div>
     )

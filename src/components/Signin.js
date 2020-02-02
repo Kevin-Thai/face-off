@@ -15,7 +15,7 @@ class Signin extends React.Component {
   }
 
   onSubmitSignIn = async () => {
-    const { data } = await axios.post('http://localhost:3000/signin', this.state)
+    const { data } = await axios.post(`${this.props.url}/signin`, this.state)
     if (data.id) {
       this.props.loadUser(data)
       this.props.onRouteChange('home')
